@@ -11,7 +11,7 @@ MIN_CONFIDENCE = 0.40
 
 def process(args, image_path):
     posenet = PoseNet(
-        model_path="./posenet_mobilenet_v1_100_257x257_multi_kpt_stripped.tflite",
+        model_path=args.model_file,
         image_path=image_path,
     )
     person, elapsed = posenet.estimate_pose(verbose=args.verbose)
@@ -64,13 +64,15 @@ def process(args, image_path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("images", nargs="+", type=argparse.FileType("rb"))
-    parser.add_argument("-b", "--bench", nargs="?", type=int, help="benchmark n times")
+    parser.add_argument("-b", "--bench", nargs="?", type=int, help="benchmark n times", default=1)
     parser.add_argument("-v", "--verbose", action="store_true", help="verbose output")
     parser.add_argument("-q", "--quiet", action="store_true", help="don't show output")
+    parser.add_argument(
+      '-m',
+      '--model_file',
+      default='./posenet_mobilenet_v1_100_257x257_multi_kpt_stripped.tflite',
+      help='.tflite model to be executed')
     args = parser.parse_args()
-
-    if not args.bench:
-        args.bench = 1
 
     for image in args.images:
         times = []
