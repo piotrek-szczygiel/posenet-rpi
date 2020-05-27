@@ -95,9 +95,9 @@ class PoseNet:
 
         self.interpreter.set_tensor(self.input_details[0]["index"], input_data)
 
-        start_time = time.process_time()
+        start_time = time.perf_counter()
         self.interpreter.invoke()
-        elapsed = (time.process_time() - start_time) * 1000
+        elapsed = (time.perf_counter() - start_time) * 1000
 
         heat_maps = self.interpreter.get_tensor(self.output_details[0]["index"])
         offset_maps = self.interpreter.get_tensor(self.output_details[1]["index"])
