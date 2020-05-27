@@ -57,7 +57,7 @@ def process(args, image_path):
                 outline=(255, 255, 0),
             )
 
-    image.show()
+    image.save("www.jpg")
     return elapsed
 
 
@@ -81,7 +81,7 @@ def main():
 
         if args.bench > 1:
             print(
-                f"{image.name} average time (out of {args.bench}): {np.mean(times):.2f}ms"
+                f"{image.name} average time (out of {args.bench}): {np.mean(times):.2f}ms \nstd: {np.std(times):.2f}ms"
             )
         else:
             print(f"{image.name}: {times[0]:.2f}ms")
